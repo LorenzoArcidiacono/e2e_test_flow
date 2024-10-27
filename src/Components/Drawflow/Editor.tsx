@@ -35,14 +35,13 @@ export const DrawflowEditor: React.FC<IDrawflowEditor> = (
 	}, [state]);
 
 	return (
-		<>
+		<div
+			className={`${styles.editor_container} ${props.className}`}
+			style={props.style}
+		>
 			{editor && <Menu editor={editor} />}
-			<div
-				id="drawflow"
-				className={`${styles.editor} ${props.className}`}
-				style={props.style}
-			></div>
-		</>
+			<div id="drawflow" className={`${styles.editor}`}></div>
+		</div>
 	);
 };
 
