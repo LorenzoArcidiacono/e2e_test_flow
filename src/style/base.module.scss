@@ -1,0 +1,57 @@
+// COLORS
+
+:root {
+	// --background: #edf2f4;
+	--background: #101820;
+	--level1: #17222e;
+	--level2: #1e2c3b;
+	--level3: #1f2e3d;
+
+	--primary_dark: #c1c1c5;
+	--primary_dark_70: #c6c6cc;
+	--primary_medium: #d7dadf;
+	--primary: #e9ecf1;
+	--primary_hover: #d5d7d9;
+	// --accent: #935be0;
+	--accent: #17ed7a;
+	--accent_dark: #18c567;
+
+	--white: #e9ecf1;
+	--black: #121212;
+
+	--error: #e25454;
+	--error_dark: #e25454;
+
+	--shadow: rgba(111, 108, 108, 0.25);
+	--gray_50: #3333338f;
+	--bkg_image: "../assets/images/BKG_blue.svg";
+
+	// --secondary_font: "Manrope", sans-serif;
+	--base_font: "Manrope", sans-serif;
+	--secondary_font: "Newake", sans-serif;
+}
+
+$background: var(--background);
+$level1: var(--level1);
+$level2: var(--level2);
+$level3: var(--level3);
+$primary_dark: var(--primary_dark);
+$primary_dark_70: var(--primary_dark_70);
+$primary_medium: var(--primary_medium);
+$primary: var(--primary);
+$primary_hover: var(--primary_hover);
+$accent: var(--accent);
+$accent_dark: var(--accent_dark);
+$white: var(--white);
+$black: var(--black);
+$error: var(--error);
+$error_dark: var(--error_dark);
+$shadow: var(--shadow);
+$gray_50: var(--gray_50);
+$bkg_image: var(--bkg_image);
+
+// GLOBAL
+body {
+	margin: 0;
+	padding: 0;
+}

@@ -1,0 +1,18 @@
+@use "../../style/base.module.scss" as *;
+
+.button {
+    width: fit-content;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 500ms;
+    background-color: $accent;
+
+    @media (hover: hover) {
+        &:hover {
+            background-color: $accent_dark;
+        }
+    }
+}
