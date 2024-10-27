@@ -1,3 +1,5 @@
+@use '../../../style/base.module.scss' as *;
+
 .node_content {
     display: flex;
     flex-direction: column;
@@ -7,7 +9,37 @@
     padding: 15px;
 
     &.mini {
-        padding: 0;
+        padding: 0 5px;
+    }
+
+    .title {
+        font-weight: 800;
+        font-style: italic;
+    }
+
+    select{
+        width: 100%;
+        border: 1px solid $primary;
+        outline: none;
+        border-radius: 8px;
+        padding: 5px;
+        background-color: $level3;
+        color: $white;
+        font-weight: 600;
+    }
+
+    input, textarea {
+        width: 95%;
+        border: 1px solid $primary;
+        outline: none;
+        border-radius: 8px;
+        padding: 10px 5px;
+        background-color: $level3;
+        color: $white;
+
+        &::placeholder{
+            color: $primary_dark;
+        }
     }
 }
 

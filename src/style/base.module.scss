@@ -5,7 +5,7 @@
 	--background: #101820;
 	--level1: #17222e;
 	--level2: #1e2c3b;
-	--level3: #1f2e3d;
+	--level3: #26384b;
 
 	--primary_dark: #c1c1c5;
 	--primary_dark_70: #c6c6cc;
@@ -50,8 +50,12 @@ $shadow: var(--shadow);
 $gray_50: var(--gray_50);
 $bkg_image: var(--bkg_image);
 
+// FONTS
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
 // GLOBAL
 body {
 	margin: 0;
 	padding: 0;
+	font-family: "Nunito", sans-serif;
 }

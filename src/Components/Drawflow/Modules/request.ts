@@ -1,4 +1,3 @@
-import { random } from "../../../utils";
 import { IAddNodeRequest } from "../drawflow.types";
 import { IGetNodeRequest, INode, TNodeList } from "./module.type";
 import styles from "./modules.module.scss";
@@ -8,15 +7,21 @@ export const RequestNode: INode = class CRequestNode {
 
 	static html = `
         <div class=${styles.node_content}>
-            Ciao Request
-            <input type="text" df-url/>
-            <input type="text" df-data/>
+            <p class='${styles.title}'>Request</p>
+			<select df-method>
+				<option value="" disabled selected>Method</option>
+				<option value="GET">GET</option>
+				<option value="POST">POST</option>
+				<option value="PUT">PUT</option>
+			</select>
+            <input placeholder='URL' type="text" df-url/>
+            <textarea placeholder='Data' cols="30" rows="10" df-data></textarea>
         </div>
     `;
 
 	static getNode(request?: IGetNodeRequest): IAddNodeRequest {
 		return {
-			name: request?.name || `${this.name}_${random()}`,
+			name: request?.name || `${this.name}_node`,
 			inputs: 1,
 			outputs: 1,
 			x: request?.x || 150,

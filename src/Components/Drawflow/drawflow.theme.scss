@@ -76,9 +76,9 @@
 
 .drawflow .drawflow-node {
 	display: var(--dfNodeType);
-	background: $primary;
-	color: $black;
-	border: var(--dfNodeBorderSize) solid var($accent);
+	background: $level1;
+	color: $white;
+	border: var(--dfNodeBorderSize) solid $primary;
 	border-radius: var(--dfNodeBorderRadius);
 	min-height: var(--dfNodeMinHeight);
 	width: auto;
@@ -93,9 +93,17 @@
 		$black;
 }
 
+.drawflow .drawflow-node.error {
+  border-color: $error !important;
+}
+
+.drawflow .drawflow-node.success {
+  border-color: $accent !important;
+}
+
 .drawflow .drawflow-node:hover {
-	background: $primary_dark;
-	color: $black;
+	background: $level2;
+	color: $white;
 	border: var(--dfNodeHoverBorderSize) solid $accent;
 	border-radius: var(--dfNodeHoverBorderRadius);
 	-webkit-box-shadow: var(--dfNodeHoverBoxShadowHL)
@@ -107,8 +115,8 @@
 }
 
 .drawflow .drawflow-node.selected {
-	background: $primary_dark;
-	color: $black;
+	background: $level2;
+	color: $white;
 	border: var(--dfNodeSelectedBorderSize) solid
 		$accent;
 	border-radius: var(--dfNodeSelectedBorderRadius);
@@ -122,15 +130,15 @@
 
 .drawflow .drawflow-node .input {
 	left: var(--dfInputLeft);
-	background: $white;
-	border: var(--dfInputBorderSize) solid $accent;
+	background: $level1;
+	border: var(--dfInputBorderSize) solid $primary;
 	border-radius: var(--dfInputBorderRadius);
 	height: var(--dfInputHeight);
 	width: var(--dfInputWidth);
 }
 
 .drawflow .drawflow-node .input:hover {
-	background: $white;
+	background: $level3;
 	border: var(--dfInputHoverBorderSize) solid $accent;
 	border-radius: var(--dfInputHoverBorderRadius);
 }
@@ -141,15 +149,15 @@
 
 .drawflow .drawflow-node .output {
 	right: var(--dfOutputRight);
-	background: $white;
-	border: var(--dfOutputBorderSize) solid $accent;
+	background: $level1;
+	border: var(--dfOutputBorderSize) solid $primary;
 	border-radius: var(--dfOutputBorderRadius);
 	height: var(--dfOutputHeight);
 	width: var(--dfOutputWidth);
 }
 
 .drawflow .drawflow-node .output:hover {
-	background: $white;
+	background: $level3;
 	border: var(--dfOutputHoverBorderSize) solid $accent;
 	border-radius: var(--dfOutputHoverBorderRadius);
 }

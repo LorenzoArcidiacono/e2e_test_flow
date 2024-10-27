@@ -6,6 +6,7 @@ import "./drawflow.theme.scss";
 import { NodeList } from "./Modules";
 import { TNodeList } from "./Modules/module.type";
 import { Drawflow } from "./drawflow";
+import { PlayCircleOutline } from "@mui/icons-material";
 
 interface IDrawflowEditor {
 	style?: CSSProperties;
@@ -71,6 +72,12 @@ const Menu = (props: { editor: Drawflow }) => {
 					editor.clear();
 				}}
 				label="Clear"
+			/>
+			<PlayCircleOutline
+				onClick={() => editor.run()}
+				style={{
+					color: "var(--accent)",
+				}}
 			/>
 		</div>
 	);
