@@ -1,0 +1,63 @@
+@use "../../../style/base.module.scss" as *;
+
+.container {
+	position: fixed;
+	z-index: 100;
+	width: 90%;
+	background-color: $accent;
+	transition: 800ms;
+	display: flex;
+	align-items: center;
+	height: 40px;
+	justify-content: flex-start;
+
+	&.top {
+		top: 20px;
+	}
+
+	&.bottom {
+		bottom: 20px;
+	}
+
+	&.left {
+		left: 0;
+		border-radius: 0 50px 50px 0;
+		flex-direction: row-reverse;
+        .open_btn {
+			margin-left: 10px;
+		}
+	}
+
+	&.right {
+		right: 0;
+		border-radius: 50px 0px 0px 50px;
+
+		.open_btn {
+			transform: rotate(180deg);
+            margin-right: 10px;
+		}
+	}
+
+	&.close {
+		width: 40px;
+	}
+
+	.menuItems {
+		transition: 500ms;
+		display: flex;
+		align-items: center;
+		flex-wrap: nowrap;
+		overflow: hidden;
+		gap: 10px;
+
+		&.close {
+			opacity: 0;
+		}
+
+		.item {
+			padding: 0;
+			margin: 0;
+            text-transform: capitalize;
+		}
+	}
+}

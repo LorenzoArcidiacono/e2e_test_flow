@@ -1,12 +1,12 @@
+import "./drawflow.theme.scss";
 import { CSSProperties, useEffect, useState } from "react";
 import styles from "./Drawflow.module.scss";
 import { EState } from "../../types";
-import { Button } from "../Buttons/Button";
-import "./drawflow.theme.scss";
 import { NodeList } from "./Modules";
 import { TNodeList } from "./Modules/module.type";
 import { Drawflow } from "./drawflow";
-import { PlayCircleOutline } from "@mui/icons-material";
+import { PlayArrow } from "@mui/icons-material";
+import { ISlideInMenuItem, SlideInMenu } from "../Menu/SlideIn";
 
 interface IDrawflowEditor {
 	style?: CSSProperties;
@@ -19,6 +19,48 @@ export const DrawflowEditor: React.FC<IDrawflowEditor> = (
 	const [state, setState] = useState<EState>(EState.INITIAL);
 	const [editor, setEditor] = useState<Drawflow>();
 
+	const menuItems: ISlideInMenuItem[] = Object.keys(NodeList).map((name) => {
+		return {
+			type: "button",
+			label: name + " Node",
+			onClick: () => {
+				editor?.addNode(NodeList[name as TNodeList].getNode());
+			},
+		};
+	});
+
+	menuItems.push(
+		{
+			type: "separator",
+		},
+		{
+			type: "icon",
+			label: "Run",
+			icon: <PlayArrow />,
+			onClick: () => {
+				editor?.run();
+			},
+		},
+		{
+			type: "separator",
+		},
+		{
+			type: "button",
+			label: "Export",
+			onClick: () => {
+				const exported = editor?.export();
+				console.log(exported);
+			},
+		},
+		{
+			type: "button",
+			label: "Clear",
+			onClick: () => {
+				editor?.clear();
+			},
+		}
+	);
+
 	useEffect(() => {
 		if (state !== EState.INITIAL) {
 			return;
@@ -27,7 +69,6 @@ export const DrawflowEditor: React.FC<IDrawflowEditor> = (
 		const id = document.getElementById("drawflow");
 		if (id) {
 			setEditor(new Drawflow("drawflow"));
-
 			setState(EState.SUCCESS);
 		} else {
 			console.log("ERROR");
@@ -40,45 +81,14 @@ export const DrawflowEditor: React.FC<IDrawflowEditor> = (
 			className={`${styles.editor_container} ${props.className}`}
 			style={props.style}
 		>
-			{editor && <Menu editor={editor} />}
 			<div id="drawflow" className={`${styles.editor}`}></div>
-		</div>
-	);
-};
-
-const Menu = (props: { editor: Drawflow }) => {
-	const { editor } = props;
-	return (
-		<div className={styles.menu}>
-			{Object.keys(NodeList).map((name) => (
-				<Button
-					key={name}
-					className={styles.menu_btn}
-					onClick={() => {
-						editor.addNode(NodeList[name as TNodeList].getNode());
-					}}
-					label={`Add ${name} Node`}
+			{state === EState.SUCCESS && (
+				<SlideInMenu
+					position="bottom"
+					direction="right"
+					items={menuItems}
 				/>
-			))}
-			<Button
-				onClick={() => {
-					const exported = editor.export();
-					console.log(exported);
-				}}
-				label="Export"
-			/>
-			<Button
-				onClick={() => {
-					editor.clear();
-				}}
-				label="Clear"
-			/>
-			<PlayCircleOutline
-				onClick={() => editor.run()}
-				style={{
-					color: "var(--accent)",
-				}}
-			/>
+			)}
 		</div>
 	);
 };

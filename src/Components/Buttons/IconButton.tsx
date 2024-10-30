@@ -1,16 +1,17 @@
-import { CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 import styles from "./Button.module.scss";
 
-interface IButton {
+interface IIconButton {
 	className?: string;
 	style?: CSSProperties;
 	onClick?: () => void;
-	label: string;
+	icon: React.ReactNode;
 	variant?: "contained" | "outlined" | "link";
 }
 
-export const Button: React.FC<IButton> = (props: IButton) => {
-	let btn_class = `${styles.button} ${props.className}`;
+export const IconButton: React.FC<IIconButton> = (props: IIconButton) => {
+
+	let btn_class = `${styles.iconButton} ${props.className}`;
 	btn_class += props.variant ? ` ${styles[props.variant]}` : "";
 
 	return (
@@ -19,7 +20,7 @@ export const Button: React.FC<IButton> = (props: IButton) => {
 			style={props.style}
 			onClick={props.onClick}
 		>
-			{props.label}
+			{props.icon}
 		</button>
 	);
 };
