@@ -53,7 +53,7 @@ export class Drawflow {
 	// RUN
 
 	async run() {
-		let executionResultText = "";
+		let executionResultText = "$ Start\n";
 		let end = false;
 
 		const exported = this.editor.export();
@@ -98,7 +98,9 @@ export class Drawflow {
 			}
 		}
 
+		executionResultText += "\n$ Finished";
 		console.log(executionResultText);
+		return executionResultText;
 	}
 
 	private getStartNode(data: IDrawflowData) {
@@ -118,7 +120,7 @@ export class Drawflow {
 				if (!data[currentIndex].outputs["output_1"].connections[0]) {
 					return {
 						success: false,
-						message: `\n> Node ${data[currentIndex].name} not connected`,
+						message: `\n$ Node ${data[currentIndex].name} not connected`,
 					};
 				}
 
@@ -127,7 +129,7 @@ export class Drawflow {
 					nextNode:
 						data[currentIndex].outputs["output_1"].connections[0]
 							.node,
-					message: "\n> ",
+					message: "\n$ ",
 				};
 		}
 
@@ -142,7 +144,7 @@ export class Drawflow {
 			case "if_node":
 				return {
 					success: true,
-					message: node.name + " executed",
+					message: "$ "+ node.name + " executed",
 				};
 			case "request_node":
 				return RequestNode.execute(node.data)
@@ -150,7 +152,7 @@ export class Drawflow {
 						console.log("request_node", result);
 						return {
 							success: result.success,
-							message: JSON.stringify(result),
+							message: JSON.stringify(result, null, 2),
 						};
 					})
 					.catch((error) => {

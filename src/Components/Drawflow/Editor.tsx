@@ -8,6 +8,7 @@ import { Drawflow } from "./drawflow";
 import { PlayArrow } from "@mui/icons-material";
 import { ISlideInMenuItem, SlideInMenu } from "../Menu/SlideIn";
 import { ExportModal, ImportModal } from "./ImportExportModal";
+import { Result } from "./Result";
 
 interface IDrawflowEditor {
 	style?: CSSProperties;
@@ -19,9 +20,10 @@ export const DrawflowEditor: React.FC<IDrawflowEditor> = (
 ) => {
 	const [state, setState] = useState<EState>(EState.INITIAL);
 	const [editor, setEditor] = useState<Drawflow>();
-	const [openModal, setOpenModal] = useState<"import" | "export" | null>(
-		'import'
+	const [openModal, setOpenModal] = useState<"import" | "export" | "result" | null>(
+		null
 	);
+	const [executionResult, setExecutionResult] = useState<string>('');
 
 	const menuItems: ISlideInMenuItem[] = Object.keys(NodeList).map((name) => {
 		return {
@@ -42,7 +44,18 @@ export const DrawflowEditor: React.FC<IDrawflowEditor> = (
 			label: "Run",
 			icon: PlayArrow,
 			onClick: () => {
-				editor?.run();
+				editor?.run().then((result) => {
+					if (result) {
+						setExecutionResult(result)
+					}
+				})
+			},
+		},
+		{
+			type: "button",
+			label: "Result",
+			onClick: () => {
+				setOpenModal("result");
 			},
 		},
 		{
@@ -113,6 +126,7 @@ export const DrawflowEditor: React.FC<IDrawflowEditor> = (
 					onClose={() => setOpenModal(null)}
 				/>
 			)}
+			{openModal === "result" && <Result executionResult={executionResult} onClose={() => setOpenModal(null)}/>}
 		</div>
 	);
 };
