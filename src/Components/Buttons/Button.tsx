@@ -36,11 +36,19 @@ export const Button: React.FC<TButton> = (props: TButton) => {
 					disabled={props.disabled}
 				>
 					{props.startIcon && (
-						<props.startIcon fontSize={props.size || "small"} />
+						<props.startIcon
+							fontSize={
+								props.size === "small" ? "small" : "medium"
+							}
+						/>
 					)}
 					{props.label}
 					{props.endIcon && (
-						<props.endIcon fontSize={props.size || "small"} />
+						<props.endIcon
+							fontSize={
+								props.size === "small" ? "small" : "medium"
+							}
+						/>
 					)}
 				</button>
 			);

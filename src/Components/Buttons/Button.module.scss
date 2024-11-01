@@ -60,7 +60,7 @@
 		}
 
 		&.dark {
-			color: $background;
+			color: $black;
 		}
 	}
 
@@ -103,7 +103,7 @@
 				}
 	
 				&.dark {
-					background-color: $level2;
+					background-color: $level1;
 				}
 			}
 
@@ -117,7 +117,7 @@
 				}
 	
 				&.dark {
-					color: $level3;
+					color: $background;
 				}
 			}
 
@@ -125,13 +125,13 @@
 				&.accent {
 					background-color: $accent_dark;
 					border-color: $accent_dark;
-					color: $background;
+					color: $black;
 				}
 	
 				&.primary {
 					background-color: $primary_dark;
 					border-color: $primary_dark;
-					color: $background;
+					color: $black;
 				}
 	
 				&.dark {

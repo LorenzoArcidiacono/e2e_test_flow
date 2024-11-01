@@ -1,3 +1,4 @@
+import { AccountTreeOutlined, HomeOutlined } from "@mui/icons-material";
 import { ISlideInMenuItem, SlideInMenu } from "../../Menu/SlideIn";
 import styles from "./Page.module.scss";
 import { CSSProperties } from "react";
@@ -12,6 +13,7 @@ const items: ISlideInMenuItem[] = [
 	{
 		type: "button",
 		label: "Home",
+		icon: HomeOutlined,
 		onClick: () => {
 			console.log("Home clicked");
 		},
@@ -19,6 +21,7 @@ const items: ISlideInMenuItem[] = [
 	{
 		type: "button",
 		label: "Editor",
+		icon: AccountTreeOutlined,
 		onClick: () => {
 			console.log("Editor clicked");
 		},

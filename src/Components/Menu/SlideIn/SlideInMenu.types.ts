@@ -12,6 +12,7 @@ export interface ISlideInMenu {
 type IButtonSlideInMenuItem = {
 	type: "button";
 	label: string;
+	icon?: SvgIconComponent;
 	onClick: () => void;
 };
 

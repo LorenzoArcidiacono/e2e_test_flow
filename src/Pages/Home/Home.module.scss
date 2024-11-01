@@ -1,0 +1,63 @@
+@use "../../style/base.module.scss" as *;
+
+.container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: $white;
+
+	.box {
+		display: flex;
+		flex-direction: column;
+        gap: 10px;
+        margin-bottom: 120px;
+        text-align: center;
+
+        &.flex_row{
+            flex-direction: row;
+        }
+
+		&.fly_left {
+			position: relative;
+			animation: fly-in-left 1s ease forwards;
+		}
+
+		&.fly_right {
+			position: relative;
+			animation: fly-in-right 1s ease forwards;
+		}
+
+        .title {
+            margin-bottom: 0px;
+            padding-bottom: 0;
+        }
+
+        p {
+            padding: 0;
+            margin: 0;
+        }
+	}
+
+	
+}
+
+@keyframes fly-in-left {
+	0% {
+		left: -50%;
+	}
+	100% {
+		left: 0%;
+	}
+}
+
+@keyframes fly-in-right {
+	0% {
+		right: -50%;
+	}
+	100% {
+		right: 0%;
+	}
+}

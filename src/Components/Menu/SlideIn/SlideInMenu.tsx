@@ -5,7 +5,7 @@ import { ISlideInMenu } from "./SlideInMenu.types";
 import { Button } from "../../Buttons/Button";
 
 export const SlideInMenu: React.FC<ISlideInMenu> = (props: ISlideInMenu) => {
-	const [open, setOpen] = useState(true);
+	const [open, setOpen] = useState(false);
 
 	let containerClass = styles.container;
 	containerClass += open ? " " : ` ${styles.close}`;
@@ -48,6 +48,7 @@ export const SlideInMenu: React.FC<ISlideInMenu> = (props: ISlideInMenu) => {
 									label={item.label}
 									variant="link"
 									color="dark"
+									startIcon={item.icon}
 								/>
 							);
 						case "separator":

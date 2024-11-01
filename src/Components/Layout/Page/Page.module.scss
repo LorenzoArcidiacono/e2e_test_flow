@@ -3,6 +3,9 @@
 .page {
     width: 100dvw;
     height: 100dvh;
-    background-color: $background;
+    // background-color: $background;
     overflow-y: scroll;
+    background: url('/images/bkg.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
