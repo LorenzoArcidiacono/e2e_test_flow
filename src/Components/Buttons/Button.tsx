@@ -21,6 +21,7 @@ export const Button: React.FC<TButton> = (props: TButton) => {
 					className={`${styles.iconButton} ${btn_class}`}
 					style={props.style}
 					onClick={props.onClick}
+					disabled={props.disabled}
 				>
 					<props.icon fontSize={props.size || "medium"} />
 				</button>
@@ -32,13 +33,14 @@ export const Button: React.FC<TButton> = (props: TButton) => {
 					className={`${styles.button} ${btn_class}`}
 					style={props.style}
 					onClick={props.onClick}
+					disabled={props.disabled}
 				>
 					{props.startIcon && (
-						<props.startIcon fontSize={props.size || "medium"} />
+						<props.startIcon fontSize={props.size || "small"} />
 					)}
 					{props.label}
 					{props.endIcon && (
-						<props.endIcon fontSize={props.size || "medium"} />
+						<props.endIcon fontSize={props.size || "small"} />
 					)}
 				</button>
 			);

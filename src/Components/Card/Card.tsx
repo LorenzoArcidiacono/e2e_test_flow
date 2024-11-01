@@ -23,6 +23,7 @@ export const Card: React.FC<ICard> = (props: ICard) => {
 					onClick={props.onClose}
                     icon={Close}
                     variant="link"
+					size="small"
 				/>
 			)}
 			{props.children}

@@ -1,0 +1,9 @@
+@use '../../style/base.module.scss' as *;
+
+.textarea {
+    resize: none;
+    background-color: $level2;
+    border: none;
+    outline: none;
+    color: $white;
+}

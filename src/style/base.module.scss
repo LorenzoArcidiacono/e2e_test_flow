@@ -24,7 +24,7 @@
 
 	--shadow: rgba(111, 108, 108, 0.25);
 	--gray_50: #3333338f;
-	--bkg_image: "../assets/images/BKG_blue.svg";
+	--modal_bkg: #1018203f;
 
 	// --secondary_font: "Manrope", sans-serif;
 	--base_font: "Manrope", sans-serif;
@@ -48,7 +48,7 @@ $error: var(--error);
 $error_dark: var(--error_dark);
 $shadow: var(--shadow);
 $gray_50: var(--gray_50);
-$bkg_image: var(--bkg_image);
+$modal_bkg: var(--modal_bkg);
 
 // FONTS
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');

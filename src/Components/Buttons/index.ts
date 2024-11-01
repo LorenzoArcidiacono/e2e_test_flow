@@ -12,6 +12,7 @@ interface IBaseButton {
 	color?: TColor;
 	shape?: TShape;
     type?: "button" | "icon";
+    disabled?: boolean;
 }
 
 interface IButton extends IBaseButton {
