@@ -1,3 +1,4 @@
+@use '../../style/base.module.scss' as *;
 
 // EDITOR
 .editor_container {
@@ -23,4 +24,26 @@
 		padding: 10px;
 		justify-content: flex-end;
 	}
+
+	.importer {
+		
+		border: 1px solid red;
+		width: 100px;
+		height: 50px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: $white;
+	}
+
+	.importer_card {
+		position: absolute;
+		z-index: 100;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: white;
+	}
 }
+
+

@@ -42,6 +42,7 @@ export const SlideInMenu: React.FC<ISlideInMenu> = (props: ISlideInMenu) => {
 									onClick={item.onClick}
 									label={item.label}
 									variant="link"
+									color="dark"
 								/>
 							);
 						case "separator":

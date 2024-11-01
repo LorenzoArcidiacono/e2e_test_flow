@@ -1,4 +1,8 @@
+@use '../../../style/base.module.scss' as *;
+
 .page {
     width: 100dvw;
     height: 100dvh;
+    background-color: $background;
+    overflow-y: scroll;
 }
