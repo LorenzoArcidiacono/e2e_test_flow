@@ -5,7 +5,7 @@ import { ISlideInMenu } from "./SlideInMenu.types";
 import { Button } from "../../Buttons/Button";
 
 export const SlideInMenu: React.FC<ISlideInMenu> = (props: ISlideInMenu) => {
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(true);
 
 	let containerClass = styles.container;
 	containerClass += open ? " " : ` ${styles.close}`;

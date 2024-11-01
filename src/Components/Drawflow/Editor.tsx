@@ -5,7 +5,7 @@ import { EState } from "../../types";
 import { NodeList } from "./Modules";
 import { TNodeList } from "./Modules/module.type";
 import { Drawflow } from "./drawflow";
-import { PlayArrow } from "@mui/icons-material";
+import { HourglassTop, PlayArrow } from "@mui/icons-material";
 import { ISlideInMenuItem, SlideInMenu } from "../Menu/SlideIn";
 import { ExportModal, ImportModal } from "./ImportExportModal";
 import { Result } from "./Result";
@@ -24,6 +24,7 @@ export const DrawflowEditor: React.FC<IDrawflowEditor> = (
 		null
 	);
 	const [executionResult, setExecutionResult] = useState<string>('');
+	const [executionStatus, setExecutionStatus] = useState<'idle' | 'running'>('idle')
 
 	const menuItems: ISlideInMenuItem[] = Object.keys(NodeList).map((name) => {
 		return {
@@ -42,9 +43,13 @@ export const DrawflowEditor: React.FC<IDrawflowEditor> = (
 		{
 			type: "icon",
 			label: "Run",
-			icon: PlayArrow,
+			icon: executionStatus === 'running' ? HourglassTop : PlayArrow,
 			onClick: () => {
+				if(executionStatus === 'running') return;
+				setExecutionStatus('running');
+				setExecutionResult('');
 				editor?.run().then((result) => {
+					setExecutionStatus('idle');
 					if (result) {
 						setExecutionResult(result)
 					}

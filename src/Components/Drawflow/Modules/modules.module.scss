@@ -1,45 +1,69 @@
-@use '../../../style/base.module.scss' as *;
+@use "../../../style/base.module.scss" as *;
 
 .node_content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    padding: 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	padding: 15px;
 
-    &.mini {
-        padding: 0 5px;
-    }
+	&.mini {
+		padding: 0 5px;
+	}
 
-    .title {
-        font-weight: 800;
-        font-style: italic;
-    }
+	.title {
+		font-weight: 800;
+		font-style: italic;
+	}
 
-    select{
-        width: 100%;
-        border: 1px solid $primary;
-        outline: none;
-        border-radius: 8px;
-        padding: 5px;
-        background-color: $level3;
-        color: $white;
-        font-weight: 600;
-    }
+	select {
+		width: 95%;
+		border: 1px solid $primary;
+		outline: none;
+		border-radius: 8px;
+		padding: 5px;
+		background-color: $level3;
+		color: $white;
+		font-weight: 600;
+	}
 
-    input, textarea {
-        width: 95%;
-        border: 1px solid $primary;
-        outline: none;
-        border-radius: 8px;
-        padding: 10px 5px;
-        background-color: $level3;
-        color: $white;
+	input,
+	textarea {
+		width: calc(100% - 20px);
+		border: 1px solid $primary;
+		outline: none;
+		border-radius: 8px;
+		padding: 10px 5px;
+		background-color: $level3;
+		color: $white;
 
-        &::placeholder{
-            color: $primary_dark;
-        }
-    }
+		&::placeholder {
+			color: $primary_dark;
+		}
+	}
+
+	fieldset {
+		width: 95%;
+		border: 1px solid $primary;
+		outline: none;
+		border-radius: 8px;
+		padding: 10px 5px;
+		background-color: $level3;
+		color: $white;
+		padding: 0;
+
+		legend {
+			left: 50%;
+		}
+
+		input,
+		textarea {
+			border: none;
+			outline: none;
+			background-color: transparent;
+			padding: 5px 10px;
+			padding-bottom: 10px;
+		}
+	}
 }
-

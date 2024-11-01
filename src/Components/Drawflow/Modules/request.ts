@@ -3,6 +3,7 @@ import { IBaseResponse } from "../../../types";
 import { IAddNodeRequest } from "../drawflow.types";
 import { IGetNodeRequest, INodeExecutable, TNodeList } from "./module.type";
 import styles from "./modules.module.scss";
+import { random } from "../../../utils";
 
 export const RequestNode: INodeExecutable = class CRequestNode {
 	static name: TNodeList = "request";
@@ -10,14 +11,25 @@ export const RequestNode: INodeExecutable = class CRequestNode {
 	static html = `
         <div class=${styles.node_content}>
             <p class='${styles.title}'>Request</p>
+			<fieldset>
+				<legend>ID</legend>
+				<input placeholder='ID' id="test" type="text" df-id/>
+			</fieldset>
 			<select df-method>
 				<option value="" disabled selected>Method</option>
 				<option value="GET">GET</option>
 				<option value="POST">POST</option>
 				<option value="PUT">PUT</option>
 			</select>
-            <input placeholder='URL' type="text" df-url/>
-            <textarea placeholder='Data' cols="30" rows="10" df-data></textarea>
+			<fieldset>
+				<legend>URL</legend>
+				<input placeholder='https://...' type="text" df-url/>
+			</fieldset>
+            <fieldset>
+				<legend>Data</legend>
+				<textarea placeholder='Data' cols="30" rows="10" df-data></textarea>
+			</fieldset>
+            
         </div>
     `;
 
@@ -29,7 +41,7 @@ export const RequestNode: INodeExecutable = class CRequestNode {
 			x: request?.x || 150,
 			y: request?.y || 300,
 			className: `${request?.className} ${this.name}_node`,
-			data: request?.data || {},
+			data: request?.data || {id:`RN-${random(0,1000)}`},
 			nodeName: this.name,
 		};
 	}

@@ -21,6 +21,7 @@ export class Drawflow {
 		this.editor = new DrawflowMain(element);
 		this.editor.editor_mode = mode || "edit";
 		this.editor.start();
+		this.setSingleOutput();
 		this.registerAllNodes();
 	}
 
@@ -51,7 +52,6 @@ export class Drawflow {
 	}
 
 	// RUN
-
 	async run() {
 		let executionResultText = "$ Start\n";
 		let end = false;
@@ -120,7 +120,7 @@ export class Drawflow {
 				if (!data[currentIndex].outputs["output_1"].connections[0]) {
 					return {
 						success: false,
-						message: `\n$ Node ${data[currentIndex].name} not connected`,
+						message: `\n$ Node ${data[currentIndex].data.id ||data[currentIndex].name} not connected`,
 					};
 				}
 
@@ -144,15 +144,20 @@ export class Drawflow {
 			case "if_node":
 				return {
 					success: true,
-					message: "$ "+ node.name + " executed",
+					message: "$ " + node.name + " executed",
 				};
 			case "request_node":
 				return RequestNode.execute(node.data)
 					.then((result) => {
 						console.log("request_node", result);
+						console.log(node.data);
 						return {
 							success: result.success,
-							message: JSON.stringify(result, null, 2),
+							message: JSON.stringify(
+								{ [node.data.id]: { ...result } },
+								null,
+								2
+							),
 						};
 					})
 					.catch((error) => {
@@ -191,6 +196,23 @@ export class Drawflow {
 	private registerAllNodes() {
 		Object.keys(NodeList).forEach((key) => {
 			this.registerNode(key, NodeList[key as TNodeList].getComponent());
+		});
+	}
+
+	private setSingleOutput() {
+		const self = this as Drawflow;
+		this.editor.on("connectionCreated", function (info) {
+			const nodeInfo = self.editor.getNodeFromId(info.output_id);
+			if (nodeInfo.outputs[info.output_class].connections.length > 1) {
+				const removeConnectionInfo =
+					nodeInfo.outputs[info.output_class].connections[0];
+				self.editor.removeSingleConnection(
+					info.output_id,
+					removeConnectionInfo.node,
+					info.output_class,
+					removeConnectionInfo.output
+				);
+			}
 		});
 	}
 }
