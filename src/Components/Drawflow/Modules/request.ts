@@ -1,8 +1,10 @@
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { IBaseResponse } from "../../../types";
 import { IAddNodeRequest } from "../drawflow.types";
-import { IGetNodeRequest, INode, TNodeList } from "./module.type";
+import { IGetNodeRequest, INodeExecutable, TNodeList } from "./module.type";
 import styles from "./modules.module.scss";
 
-export const RequestNode: INode = class CRequestNode {
+export const RequestNode: INodeExecutable = class CRequestNode {
 	static name: TNodeList = "request";
 
 	static html = `
@@ -36,5 +38,66 @@ export const RequestNode: INode = class CRequestNode {
 		const module_html = document.createElement("div");
 		module_html.innerHTML = this.html;
 		return module_html;
+	}
+
+	static async execute(data: {
+		method: string;
+		url: string;
+		body?: object;
+	}): Promise<IBaseResponse> {
+		let response: AxiosResponse;
+
+		try {
+			switch (data.method) {
+				case "GET":
+					response = await axios.get(data.url);
+					break;
+				case "POST":
+					response = await axios.post(data.url, data.body);
+					break;
+				case "PATCH":
+					response = await axios.patch(data.url, data.body);
+					break;
+				case "PUT":
+					response = await axios.put(data.url, data.body);
+					break;
+				case "DELETE":
+					response = await axios.delete(data.url);
+					break;
+				default:
+					return {
+						success: false,
+						statusCode: 500,
+						message: `Method ${data.method} not implemented`,
+					};
+			}
+
+			return {
+				success: true,
+				statusCode: response.status,
+				data: response.data,
+			};
+		} catch (error_) {
+			const error = error_ as AxiosError;
+			if (error.response) {
+				return {
+					success: false,
+					statusCode: error.response.status,
+					message: JSON.stringify(error.response.data),
+				};
+			} else if (error.request) {
+				return {
+					success: false,
+					statusCode: 0,
+					message: "No response received",
+				}
+			} else {
+				return {
+					success: false,
+					statusCode: 0,
+					message: error.message,
+				}
+			}
+		}
 	}
 };

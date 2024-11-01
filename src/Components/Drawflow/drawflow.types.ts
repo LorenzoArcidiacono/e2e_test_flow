@@ -20,13 +20,13 @@ export const START_NODE_NAME = "start_node";
 
 export type TGetNextNodeResult = TGetNextNodeResultSuccess | TBaseErrorResult;
 
-export type TExecuteNodeResult = TExecuteNodeResultSuccess | TBaseErrorResult;
-
 type TGetNextNodeResultSuccess = {
 	success: true;
 	nextNode: string;
 	message?: string;
 };
+
+export type TExecuteNodeResult = TExecuteNodeResultSuccess | TBaseErrorResult;
 
 type TExecuteNodeResultSuccess = {
 	success: true;

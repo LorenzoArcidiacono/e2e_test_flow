@@ -6,7 +6,7 @@ import {
 	TExecuteNodeResult,
 	TGetNextNodeResult,
 } from "./drawflow.types";
-import { NodeList } from "./Modules";
+import { NodeList, RequestNode } from "./Modules";
 import { TNodeList } from "./Modules/module.type";
 
 export class Drawflow {
@@ -38,10 +38,6 @@ export class Drawflow {
 		);
 	}
 
-	registerNode(name: string, node: HTMLDivElement) {
-		this.editor.registerNode(name, node, {}, {});
-	}
-
 	export() {
 		return this.editor.export();
 	}
@@ -56,10 +52,10 @@ export class Drawflow {
 
 	// RUN
 
-	run() {
-		let executionResultText = '';
+	async run() {
+		let executionResultText = "";
 		let end = false;
-		
+
 		const exported = this.editor.export();
 		const { data } = exported.drawflow.Home;
 		const indexStartNode = this.getStartNode(data);
@@ -69,6 +65,8 @@ export class Drawflow {
 			return;
 		}
 
+		this.resetNodeVisitedResult();
+
 		let indexCurrentNode = indexStartNode;
 		let indexNextNode = indexStartNode;
 
@@ -76,7 +74,12 @@ export class Drawflow {
 			indexCurrentNode = indexNextNode;
 
 			// DO SOMETHING
-			const resultExecute = this.executeNode(data[indexCurrentNode]);
+			const resultExecute = await this.executeNode(
+				data[indexCurrentNode]
+			);
+
+			console.log("resultExecute", resultExecute);
+
 			executionResultText += resultExecute.message;
 			if (resultExecute.success === false) {
 				this.setNodeVisitedResult(indexCurrentNode, "error");
@@ -96,7 +99,6 @@ export class Drawflow {
 		}
 
 		console.log(executionResultText);
-		
 	}
 
 	private getStartNode(data: IDrawflowData) {
@@ -125,7 +127,7 @@ export class Drawflow {
 					nextNode:
 						data[currentIndex].outputs["output_1"].connections[0]
 							.node,
-					message: '\n> '
+					message: "\n> ",
 				};
 		}
 
@@ -134,39 +136,54 @@ export class Drawflow {
 		};
 	}
 
-	private executeNode(node: DrawflowNode): TExecuteNodeResult {
+	private async executeNode(node: DrawflowNode): Promise<TExecuteNodeResult> {
 		switch (node.name) {
-			case 'start_node':
+			case "start_node":
 			case "if_node":
 				return {
 					success: true,
 					message: node.name + " executed",
 				};
 			case "request_node":
-				console.log(node.data);
-				return {
-					success: false,
-					message: node.name + " not implemented",
-				}
+				return RequestNode.execute(node.data)
+					.then((result) => {
+						console.log("request_node", result);
+						return {
+							success: result.success,
+							message: JSON.stringify(result),
+						};
+					})
+					.catch((error) => {
+						return {
+							success: false,
+							message: error.message,
+						};
+					});
 			default:
 				return {
 					success: false,
 					message: `Node ${node.name} execution not found`,
 				};
 		}
-
-		return {
-			success: false,
-			message: `Something went during execution `,
-		};
 	}
 
-	
 	// UTILS
+	private registerNode(name: string, node: HTMLDivElement) {
+		this.editor.registerNode(name, node, {}, {});
+	}
+
 	private setNodeVisitedResult(index: string, result: "success" | "error") {
 		document
 			.getElementById("node-" + index)
 			?.classList.add(result === "success" ? "success" : "error");
+	}
+
+	private resetNodeVisitedResult() {
+		const elements = document.getElementsByClassName("drawflow-node");
+
+		for (const element of elements) {
+			element.classList.remove("success", "error");
+		}
 	}
 
 	private registerAllNodes() {

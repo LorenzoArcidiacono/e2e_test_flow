@@ -1,3 +1,4 @@
+import { IBaseResponse } from "../../../types";
 import { IAddNodeRequest } from "../drawflow.types";
 
 export interface INode {
@@ -5,6 +6,10 @@ export interface INode {
 	html: string;
 	getNode(request?: IGetNodeRequest): IAddNodeRequest;
 	getComponent(): HTMLDivElement;
+}
+
+export interface INodeExecutable extends INode {
+	execute(data: object): Promise<IBaseResponse>;
 }
 
 export interface IGetNodeRequest {
