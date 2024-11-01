@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 import styles from "./Card.module.scss";
-import { IconButton } from "../Buttons/IconButton";
 import { Close } from "@mui/icons-material";
+import { Button } from "../Buttons";
 
 export interface ICard {
 	className?: string;
@@ -17,10 +17,11 @@ export const Card: React.FC<ICard> = (props: ICard) => {
 			style={props.style}
 		>
 			{props.onClose && (
-				<IconButton
+				<Button
+					type="icon"
 					className={styles.card_close_btn}
 					onClick={props.onClose}
-                    icon={<Close />}
+                    icon={Close}
                     variant="link"
 				/>
 			)}

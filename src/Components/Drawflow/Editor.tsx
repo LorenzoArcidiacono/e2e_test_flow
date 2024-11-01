@@ -39,7 +39,7 @@ export const DrawflowEditor: React.FC<IDrawflowEditor> = (
 		{
 			type: "icon",
 			label: "Run",
-			icon: <PlayArrow />,
+			icon: PlayArrow,
 			onClick: () => {
 				editor?.run();
 			},

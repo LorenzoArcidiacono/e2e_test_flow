@@ -1,3 +1,4 @@
+import { SvgIconComponent } from "@mui/icons-material";
 import { CSSProperties } from "react";
 
 export interface ISlideInMenu {
@@ -17,7 +18,7 @@ type IButtonSlideInMenuItem = {
 type IIconSlideInMenuItem = {
 	type: "icon";
 	label?: string;
-	icon: React.ReactNode;
+	icon: SvgIconComponent;
 	onClick: () => void;
 };
 

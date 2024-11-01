@@ -11,6 +11,10 @@
 	border-color: $background;
 	background-color: $primary;
 	font-size: medium;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	flex-shrink: 0;
 
 	&.small {
 		padding: 8px 12px;
@@ -20,6 +24,10 @@
 	&.large {
 		padding: 10px 15px;
 		font-size: large;
+	}
+
+	&.rounded {
+		border-radius: 200px;
 	}
 
 	&.contained {
@@ -132,18 +140,15 @@
 }
 
 .iconButton {
-
 	@extend .button;
 
 	width: fit-content;
 	aspect-ratio: 1/1;
-	padding: 5px;
-	border-radius: 200px;
-	border: none;
-	outline: none;
-	cursor: pointer;
-	transition: 500ms;
-	background-color: $accent;
-	display: flex;
-	align-items: center;
+	background-color: $primary;
+	padding: 8px;
+	gap: 0px;
+
+	&.small, &.large {
+		padding: 5px;
+	}
 }
