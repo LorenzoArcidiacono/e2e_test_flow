@@ -1,0 +1,87 @@
+@use "../../style/base.module.scss" as *;
+
+.group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.container {
+	width: 100%;
+	border: 2px solid $primary;
+	border-radius: 8px;
+
+	&.primary {
+		border-color: $primary;
+
+		.header {
+			border-color: $primary;
+            color: $primary;
+		}
+
+        .open_btn {
+            color: $primary;
+        }
+	}
+
+    &.accent {
+		border-color: $accent;
+
+		.header {
+			border-color: $accent;
+            color: $accent;
+		}
+
+        .open_btn {
+            color: $accent;
+        }
+	}
+
+    &.dark {
+		border-color: $background;
+
+		.header {
+			border-color: $background;
+            color: $background;
+		}
+
+        .open_btn {
+            color: $background;
+        }
+	}
+
+	.header {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: 1px solid $primary;
+		padding: 5px 15px;
+		cursor: pointer;
+	}
+
+	.content {
+		overflow-x: scroll;
+		transition: 800ms;
+		opacity: 0;
+		height: 0;
+		padding: 0px;
+	}
+
+	&.open {
+		.header {
+			.open_btn {
+				transform: rotate(90deg);
+			}
+		}
+
+		.content {
+			display: block;
+			opacity: 1;
+			height: 300px;
+			padding: 15px;
+		}
+	}
+}

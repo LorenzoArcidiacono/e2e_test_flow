@@ -3,7 +3,8 @@ import { IGetNodeRequest, INode, TNodeList } from "./module.type";
 import styles from "./modules.module.scss";
 
 export const StartNode: INode = class CStartNode {
-	static name: TNodeList = "start";
+	static name: TNodeList = "start";	
+
 	static html = `
         <div class='${styles.node_content} ${styles.mini}'>
             <p class='${styles.title}'>Start</p>
@@ -11,6 +12,7 @@ export const StartNode: INode = class CStartNode {
     `;
 
 	static getNode(request?: IGetNodeRequest): IAddNodeRequest {
+		
 		return {
 			name: request?.name || `${this.name}_node`,
 			inputs: 0,

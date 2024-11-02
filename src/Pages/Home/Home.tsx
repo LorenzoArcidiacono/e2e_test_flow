@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../Components/Buttons";
 import { Page } from "../../Components/Layout";
 import styles from "./Home.module.scss";
-import { AccountTree, AccountTreeOutlined } from "@mui/icons-material";
+import { AccountTree } from "@mui/icons-material";
 
 export const Home: React.FC = () => {
 	const navigator = useNavigate();
@@ -23,7 +23,7 @@ export const Home: React.FC = () => {
 				>
 					<Button
 						className={styles.button}
-						label="Make my live easier!"
+						label="Make my life easier!"
 						size="large"
 						color="accent"
 						onClick={() => navigator("/editor")}

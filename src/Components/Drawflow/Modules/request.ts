@@ -12,7 +12,7 @@ export const RequestNode: INodeExecutable = class CRequestNode {
         <div class=${styles.node_content}>
             <p class='${styles.title}'>Request</p>
 			<fieldset>
-				<legend>ID</legend>
+				<p class='${styles.legend}'>ID</p>
 				<input placeholder='ID' id="test" type="text" df-id/>
 			</fieldset>
 			<select df-method>
@@ -22,11 +22,11 @@ export const RequestNode: INodeExecutable = class CRequestNode {
 				<option value="PUT">PUT</option>
 			</select>
 			<fieldset>
-				<legend>URL</legend>
+				<p class='${styles.legend}'>URL</p>
 				<input placeholder='https://...' type="text" df-url/>
 			</fieldset>
             <fieldset>
-				<legend>Data</legend>
+				<p class='${styles.legend}'>Data</p>
 				<textarea placeholder='Data' cols="30" rows="10" df-data></textarea>
 			</fieldset>
             
