@@ -2,14 +2,18 @@ import { IBaseResponse } from "../../../types";
 import { IAddNodeRequest } from "../drawflow.types";
 
 export interface INode {
-    name: TNodeList;
+	name: TNodeList;
 	html: string;
 	getNode(request?: IGetNodeRequest): IAddNodeRequest;
 	getComponent(): HTMLDivElement;
+	getName(): string;
 }
 
 export interface INodeExecutable extends INode {
-	execute(data: object): Promise<IBaseResponse>;
+	execute(
+		data: object,
+		currentExecutionResultData: object
+	): Promise<IBaseResponse>;
 }
 
 export interface IGetNodeRequest {
@@ -20,7 +24,7 @@ export interface IGetNodeRequest {
 	data?: object;
 }
 
-export const nodeList = ["start", "request"] as const;
+export const nodeList = ["start", "request", "param"] as const;
 
 export type TNodeList = (typeof nodeList)[number];
 

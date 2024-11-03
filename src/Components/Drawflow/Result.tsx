@@ -9,14 +9,14 @@ interface IResult {
 export const Result: React.FC<IResult> = (props: IResult) => {
 	return (
 		<Modal onClose={props.onClose}>
-			<Card onClose={props.onClose} style={{ maxWidth: "50%" }}>
+			<Card onClose={props.onClose} style={{ maxWidth: "50%"}}>
 				<CardHeader>Execution Result</CardHeader>
 				<CardContent>
 					<pre
 						style={{
 							whiteSpace: "pre-wrap",
 							maxWidth: "100%",
-							maxHeight: "100%",
+							maxHeight: "30dvh",
 							overflowX: "hidden",
 							overflowY: 'scroll',
 						}}

@@ -16,8 +16,6 @@ export interface IDrawflowData {
 	[key: string]: DrawflowNode;
 }
 
-export const START_NODE_NAME = "start_node";
-
 export type TGetNextNodeResult = TGetNextNodeResultSuccess | TBaseErrorResult;
 
 type TGetNextNodeResultSuccess = {

@@ -2,11 +2,10 @@ import DrawflowMain, { DrawflowNode } from "drawflow";
 import {
 	IAddNodeRequest,
 	IDrawflowData,
-	START_NODE_NAME,
 	TExecuteNodeResult,
 	TGetNextNodeResult,
 } from "./drawflow.types";
-import { NodeList, RequestNode } from "./Modules";
+import { NodeList, ParameterNode, RequestNode, StartNode } from "./Modules";
 import { TNodeList } from "./Modules/module.type";
 
 export class Drawflow {
@@ -66,21 +65,39 @@ export class Drawflow {
 		}
 
 		this.resetNodeVisitedResult();
+		const params = this.getAllParams(data);
+		console.log(params);
 
 		let indexCurrentNode = indexStartNode;
 		let indexNextNode = indexStartNode;
+		const executionResultData: {
+			[key: string]: object;
+		} = {};
 
 		while (!end) {
 			indexCurrentNode = indexNextNode;
 
 			// DO SOMETHING
 			const resultExecute = await this.executeNode(
-				data[indexCurrentNode]
+				data[indexCurrentNode],
+				executionResultData
 			);
 
-			console.log("resultExecute", resultExecute);
-
 			executionResultText += resultExecute.message;
+
+			if (resultExecute.success === true && resultExecute.message) {
+				try {
+					const executionData = JSON.parse(resultExecute.message);
+					executionResultData[data[indexCurrentNode].data.id] =
+						executionData[data[indexCurrentNode].data.id].data;
+				} catch (error) {
+					console.error(error);
+					executionResultData[data[indexCurrentNode].data.id] = {
+						message: resultExecute.message,
+					};
+				}
+			}
+
 			if (resultExecute.success === false) {
 				this.setNodeVisitedResult(indexCurrentNode, "error");
 				end = true;
@@ -99,13 +116,12 @@ export class Drawflow {
 		}
 
 		executionResultText += "\n$ Finished";
-		console.log(executionResultText);
 		return executionResultText;
 	}
 
 	private getStartNode(data: IDrawflowData) {
 		return Object.keys(data).find((node) => {
-			return data[node].class.includes(START_NODE_NAME);
+			return data[node].name.includes(StartNode.name);
 		});
 	}
 
@@ -120,7 +136,10 @@ export class Drawflow {
 				if (!data[currentIndex].outputs["output_1"].connections[0]) {
 					return {
 						success: false,
-						message: `\n$ Node ${data[currentIndex].data.id ||data[currentIndex].name} not connected`,
+						message: `\n$ Node ${
+							data[currentIndex].data.id ||
+							data[currentIndex].name
+						} not connected`,
 					};
 				}
 
@@ -138,7 +157,10 @@ export class Drawflow {
 		};
 	}
 
-	private async executeNode(node: DrawflowNode): Promise<TExecuteNodeResult> {
+	private async executeNode(
+		node: DrawflowNode,
+		currentExecutionResultData: object
+	): Promise<TExecuteNodeResult> {
 		switch (node.name) {
 			case "start_node":
 			case "if_node":
@@ -147,10 +169,11 @@ export class Drawflow {
 					message: "$ " + node.name + " executed",
 				};
 			case "request_node":
-				return RequestNode.execute(node.data)
+				return RequestNode.execute(
+					node.data,
+					currentExecutionResultData
+				)
 					.then((result) => {
-						console.log("request_node", result);
-						console.log(node.data);
 						return {
 							success: result.success,
 							message: JSON.stringify(
@@ -214,5 +237,28 @@ export class Drawflow {
 				);
 			}
 		});
+	}
+
+	private getAllParams(data: IDrawflowData) {
+		const keys = Object.keys(data);
+		const result: {
+			[key: string]: object;
+		} = {};
+
+		keys.forEach((key) => {
+			if (data[key].name.includes(ParameterNode.getName())) {
+				try {
+					result[data[key].data.id] = JSON.parse(data[key].data.data);
+				} catch (error) {
+					console.error(
+						`Not a valid JSON:\n ${JSON.stringify(
+							data[key]
+						)}\n, ${error}`
+					);
+				}
+			}
+		});
+
+		return result;
 	}
 }

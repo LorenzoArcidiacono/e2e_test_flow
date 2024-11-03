@@ -4,6 +4,7 @@ import { IAddNodeRequest } from "../drawflow.types";
 import { IGetNodeRequest, INodeExecutable, TNodeList } from "./module.type";
 import styles from "./modules.module.scss";
 import { random } from "../../../utils";
+import { replacePlaceholders } from ".";
 
 export const RequestNode: INodeExecutable = class CRequestNode {
 	static name: TNodeList = "request";
@@ -25,11 +26,14 @@ export const RequestNode: INodeExecutable = class CRequestNode {
 				<p class='${styles.legend}'>URL</p>
 				<input placeholder='https://...' type="text" df-url/>
 			</fieldset>
+			<fieldset>
+				<p class='${styles.legend}'>Header</p>
+				<textarea placeholder='{}' cols="30" rows="10" df-header></textarea>
+			</fieldset>
             <fieldset>
 				<p class='${styles.legend}'>Data</p>
-				<textarea placeholder='Data' cols="30" rows="10" df-data></textarea>
+				<textarea placeholder='{}' cols="30" rows="10" df-body></textarea>
 			</fieldset>
-            
         </div>
     `;
 
@@ -41,7 +45,7 @@ export const RequestNode: INodeExecutable = class CRequestNode {
 			x: request?.x || 150,
 			y: request?.y || 300,
 			className: `${request?.className} ${this.name}_node`,
-			data: request?.data || {id:`RN-${random(0,1000)}`},
+			data: request?.data || { id: `RN-${random(0, 1000)}` },
 			nodeName: this.name,
 		};
 	}
@@ -52,29 +56,85 @@ export const RequestNode: INodeExecutable = class CRequestNode {
 		return module_html;
 	}
 
-	static async execute(data: {
-		method: string;
-		url: string;
-		body?: object;
-	}): Promise<IBaseResponse> {
+	static getName() {
+		return this.name;
+	}
+
+	static async execute(
+		data: {
+			method: string;
+			url: string;
+			header?: string;
+			body?: string;
+		},
+		currentExecutionResultData: { [key: string]: { [key: string]: never } }
+	): Promise<IBaseResponse> {
 		let response: AxiosResponse;
+		let body: object = {};
+		let header: object = {};
+
+		// HEADER
+		if (data.header) {
+			data.header = replacePlaceholders({
+				data: data.header,
+				currentExecutionData: currentExecutionResultData,
+			});
+		}
+
+		try {
+			header = JSON.parse(data.header || "{}");
+		} catch (error) {
+			console.error(error);
+			return {
+				success: false,
+				statusCode: 500,
+				message: `Not a valid JSON: ${data.header}`,
+			};
+		}
+
+		// BODY
+		if (data.body) {
+			data.body = replacePlaceholders({
+				data: data.body,
+				currentExecutionData: currentExecutionResultData,
+			});
+		}
+
+		try {
+			body = JSON.parse(data.body || "{}");
+		} catch (error) {
+			console.error(error);
+			return {
+				success: false,
+				statusCode: 500,
+				message: `Not a valid JSON: ${data.body}`,
+			};
+		}
 
 		try {
 			switch (data.method) {
 				case "GET":
-					response = await axios.get(data.url);
+					response = await axios.get(data.url, { headers: header });
 					break;
 				case "POST":
-					response = await axios.post(data.url, data.body);
+					response = await axios.post(data.url, body, {
+						headers: header,
+					});
 					break;
 				case "PATCH":
-					response = await axios.patch(data.url, data.body);
+					response = await axios.patch(data.url, body, {
+						headers: header,
+					});
 					break;
 				case "PUT":
-					response = await axios.put(data.url, data.body);
+					response = await axios.put(data.url, body, {
+						headers: header,
+					});
 					break;
 				case "DELETE":
-					response = await axios.delete(data.url);
+					response = await axios.delete(data.url, {
+						headers: header,
+					});
 					break;
 				default:
 					return {
@@ -102,13 +162,13 @@ export const RequestNode: INodeExecutable = class CRequestNode {
 					success: false,
 					statusCode: 0,
 					message: "No response received",
-				}
+				};
 			} else {
 				return {
 					success: false,
 					statusCode: 0,
 					message: error.message,
-				}
+				};
 			}
 		}
 	}
