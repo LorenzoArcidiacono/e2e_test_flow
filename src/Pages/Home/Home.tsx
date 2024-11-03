@@ -34,6 +34,7 @@ export const Home: React.FC = () => {
 						size="large"
 						color="primary"
 						variant="outlined"
+						onClick={() => navigator("/docs")}
 					/>
 				</div>
 			</div>

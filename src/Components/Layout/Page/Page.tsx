@@ -1,4 +1,9 @@
-import { AccountTreeOutlined, ExtensionOutlined, HomeOutlined } from "@mui/icons-material";
+import {
+	AccountTreeOutlined,
+	ArticleOutlined,
+	ExtensionOutlined,
+	HomeOutlined,
+} from "@mui/icons-material";
 import { ISlideInMenuItem, SlideInMenu } from "../../Menu/SlideIn";
 import styles from "./Page.module.scss";
 import { CSSProperties } from "react";
@@ -32,6 +37,14 @@ export const Page: React.FC<IPage> = (props: IPage) => {
 		},
 		{
 			type: "button",
+			label: "Docs",
+			icon: ArticleOutlined,
+			onClick: () => {
+				navigator("/docs");
+			},
+		},
+		{
+			type: "button",
 			label: "Components",
 			icon: ExtensionOutlined,
 			onClick: () => {
@@ -39,7 +52,6 @@ export const Page: React.FC<IPage> = (props: IPage) => {
 			},
 		},
 	];
-	
 
 	return (
 		<div

@@ -1,0 +1,47 @@
+@use '../../style/base.module.scss' as *;
+
+.container {
+    margin-top: 5dvh;
+    padding: 10px 15px;
+
+
+    .animate_left {
+        position: relative;
+        transform: translateX(-120%);
+        animation: fly-in-left 1s ease forwards;
+    }
+
+    .animate_right {
+        position: relative;
+        transform: translateX(120%);
+        animation: fly-in-right 1s ease forwards;
+    }
+
+    .accordion_title {
+        padding: 0;
+        margin: 0;
+    }
+
+    .accordion_content{
+        background-color: $background;
+        color: $white;
+    }
+}
+
+@keyframes fly-in-left {
+    0% {
+        transform: translateX(-120%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fly-in-right {
+    0% {
+        transform: translateX(120%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
