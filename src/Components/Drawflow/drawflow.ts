@@ -5,7 +5,13 @@ import {
 	TExecuteNodeResult,
 	TGetNextNodeResult,
 } from "./drawflow.types";
-import { NodeList, ParameterNode, RequestNode, StartNode } from "./Modules";
+import {
+	NodeList,
+	ParameterNode,
+	replacePlaceholders,
+	RequestNode,
+	StartNode,
+} from "./Modules";
 import { TNodeList } from "./Modules/module.type";
 
 export class Drawflow {
@@ -70,9 +76,8 @@ export class Drawflow {
 
 		let indexCurrentNode = indexStartNode;
 		let indexNextNode = indexStartNode;
-		const executionResultData: {
-			[key: string]: object;
-		} = {};
+		const executionResultData: { [key: string]: { [key: string]: never } } =
+			{};
 
 		while (!end) {
 			indexCurrentNode = indexNextNode;
@@ -92,9 +97,6 @@ export class Drawflow {
 						executionData[data[indexCurrentNode].data.id].data;
 				} catch (error) {
 					console.error(error);
-					executionResultData[data[indexCurrentNode].data.id] = {
-						message: resultExecute.message,
-					};
 				}
 			}
 
@@ -159,7 +161,7 @@ export class Drawflow {
 
 	private async executeNode(
 		node: DrawflowNode,
-		currentExecutionResultData: object
+		currentExecutionResultData: { [key: string]: { [key: string]: never } }
 	): Promise<TExecuteNodeResult> {
 		switch (node.name) {
 			case "start_node":
@@ -169,10 +171,21 @@ export class Drawflow {
 					message: "$ " + node.name + " executed",
 				};
 			case "request_node":
-				return RequestNode.execute(
-					node.data,
-					currentExecutionResultData
-				)
+				if (node.data.header) {
+					node.data.header = replacePlaceholders({
+						data: node.data.header,
+						currentExecutionData: currentExecutionResultData,
+					});
+				}
+
+				if (node.data.body) {
+					node.data.body = replacePlaceholders({
+						data: node.data.body,
+						currentExecutionData: currentExecutionResultData,
+					});
+				}
+
+				return RequestNode.execute(node.data)
 					.then((result) => {
 						return {
 							success: result.success,

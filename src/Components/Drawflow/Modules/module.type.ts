@@ -12,7 +12,6 @@ export interface INode {
 export interface INodeExecutable extends INode {
 	execute(
 		data: object,
-		currentExecutionResultData: object
 	): Promise<IBaseResponse>;
 }
 

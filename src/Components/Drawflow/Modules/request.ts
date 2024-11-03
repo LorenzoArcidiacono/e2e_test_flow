@@ -4,7 +4,6 @@ import { IAddNodeRequest } from "../drawflow.types";
 import { IGetNodeRequest, INodeExecutable, TNodeList } from "./module.type";
 import styles from "./modules.module.scss";
 import { random } from "../../../utils";
-import { replacePlaceholders } from ".";
 
 export const RequestNode: INodeExecutable = class CRequestNode {
 	static name: TNodeList = "request";
@@ -66,21 +65,13 @@ export const RequestNode: INodeExecutable = class CRequestNode {
 			url: string;
 			header?: string;
 			body?: string;
-		},
-		currentExecutionResultData: { [key: string]: { [key: string]: never } }
+		}
 	): Promise<IBaseResponse> {
 		let response: AxiosResponse;
 		let body: object = {};
 		let header: object = {};
 
 		// HEADER
-		if (data.header) {
-			data.header = replacePlaceholders({
-				data: data.header,
-				currentExecutionData: currentExecutionResultData,
-			});
-		}
-
 		try {
 			header = JSON.parse(data.header || "{}");
 		} catch (error) {
@@ -93,13 +84,6 @@ export const RequestNode: INodeExecutable = class CRequestNode {
 		}
 
 		// BODY
-		if (data.body) {
-			data.body = replacePlaceholders({
-				data: data.body,
-				currentExecutionData: currentExecutionResultData,
-			});
-		}
-
 		try {
 			body = JSON.parse(data.body || "{}");
 		} catch (error) {
